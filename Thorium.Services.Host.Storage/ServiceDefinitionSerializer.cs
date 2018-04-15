@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using Thorium_Services_Shared;
-using Thorium_Data;
-using Thorium_Data_Impl.Serializers;
-using Thorium_Data_Impl;
+using Thorium.Data;
+using Thorium.Data.Implementation.Serializers;
+using Thorium.Data.Implementation;
 
 namespace Thorium_Services_Host_Storage
 {

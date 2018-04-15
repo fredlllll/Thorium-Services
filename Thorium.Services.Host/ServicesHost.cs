@@ -1,6 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json.Linq;
-using Thorium_Net;
+using Thorium.Net;
 
 namespace Thorium_Services_Host
 {

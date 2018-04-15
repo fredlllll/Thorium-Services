@@ -1,5 +1,5 @@
 ﻿using System;
-using Thorium_Net;
+using Thorium.Net;
 using Thorium_Services_Shared;
 
 namespace Thorium_Services_Client
