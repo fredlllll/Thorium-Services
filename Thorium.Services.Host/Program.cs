@@ -1,4 +1,4 @@
-﻿namespace Thorium_Services_Host
+﻿namespace Thorium.Services.Host
 {
     public static class Program
     {

@@ -7,8 +7,8 @@
     <ProjectGuid>{97351C87-1976-4F35-81E1-42D47EC0FCF8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thorium_Services_Client</RootNamespace>
-    <AssemblyName>Thorium-Services-Client</AssemblyName>
+    <RootNamespace>Thorium.Services.Client</RootNamespace>
+    <AssemblyName>Thorium.Services.Client</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

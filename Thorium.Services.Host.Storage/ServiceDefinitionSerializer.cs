@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using Thorium_Services_Shared;
+using Thorium.Services.Shared;
 using Thorium.Data;
 using Thorium.Data.Implementation.Serializers;
 using Thorium.Data.Implementation;
 
-namespace Thorium_Services_Host_Storage
+namespace Thorium.Services.Host.Storage
 {
     public class ServiceDefinitionSerializer : BaseSerializer<string, ServiceDefinition>
     {

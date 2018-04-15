@@ -7,8 +7,8 @@
     <ProjectGuid>{51494A4A-33E5-4099-8AA3-A96697F792F9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thorium_Services_Host_Storage</RootNamespace>
-    <AssemblyName>Thorium-Services-Host-Storage</AssemblyName>
+    <RootNamespace>Thorium.Services.Host.Storage</RootNamespace>
+    <AssemblyName>Thorium.Services.Host.Storage</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -33,6 +33,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceDefinitionSerializer.cs" />
+    <Compile Include="IServiceDefinitionStorage.cs" />
+    <Compile Include="MemoryServiceDefinitionStorage.cs" />
     <Compile Include="ServiceInterfaceDefinitionSerializer.cs" />
   </ItemGroup>
   <ItemGroup>

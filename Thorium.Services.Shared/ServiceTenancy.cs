@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Thorium_Services_Shared
+namespace Thorium.Services.Shared
 {
     /// <summary>
     /// on lookup it determines where to look for a service definition

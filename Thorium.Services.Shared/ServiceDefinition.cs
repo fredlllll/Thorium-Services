@@ -1,9 +1,8 @@
 ﻿using System;
 using Newtonsoft.Json.Linq;
 using Thorium.Extensions.JSON;
-using Thorium.Utils;
 
-namespace Thorium_Services_Shared
+namespace Thorium.Services.Shared
 {
     public class ServiceDefinition : IJSONConvertable
     {
@@ -18,7 +17,7 @@ namespace Thorium_Services_Shared
 
         public ServiceDefinition(string name, ServiceInterfaceDefinition[] interfaceDefinitions)
         {
-            Id = Utils.GetRandomGUID();
+            Id = Utils.Utils.GetRandomGUID();
             Name = name;
             InterfaceDefinitions = interfaceDefinitions;
         }

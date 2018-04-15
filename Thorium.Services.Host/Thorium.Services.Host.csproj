@@ -7,8 +7,8 @@
     <ProjectGuid>{9F52A57E-7E99-4318-8C23-1724F268F918}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thorium_Services_Host</RootNamespace>
-    <AssemblyName>Thorium-Services-Host</AssemblyName>
+    <RootNamespace>Thorium.Services.Host</RootNamespace>
+    <AssemblyName>Thorium.Services.Host</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -44,9 +44,20 @@
       <Project>{6C35570E-8937-4E5D-80A8-608D1D5080FA}</Project>
       <Name>Thorium-Net</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Thorium.Services.Host.Storage\Thorium.Services.Host.Storage.csproj">
+      <Project>{51494A4A-33E5-4099-8AA3-A96697F792F9}</Project>
+      <Name>Thorium.Services.Host.Storage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Thorium.Services.Shared\Thorium.Services.Shared.csproj">
+      <Project>{F5ABF0F0-0DF4-4224-AC36-A717345422EE}</Project>
+      <Name>Thorium.Services.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="serviceshost_config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
