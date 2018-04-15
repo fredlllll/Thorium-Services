@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2009
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thorium.Services.Client", "Thorium.Services.Client\Thorium.Services.Client.csproj", "{97351C87-1976-4F35-81E1-42D47EC0FCF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thorium.Services.Host", "Thorium.Services.Host\Thorium.Services.Host.csproj", "{9F52A57E-7E99-4318-8C23-1724F268F918}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thorium.Services.Host.Storage", "Thorium.Services.Host.Storage\Thorium.Services.Host.Storage.csproj", "{51494A4A-33E5-4099-8AA3-A96697F792F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thorium.Services.Shared", "Thorium.Services.Shared\Thorium.Services.Shared.csproj", "{F5ABF0F0-0DF4-4224-AC36-A717345422EE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{97351C87-1976-4F35-81E1-42D47EC0FCF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97351C87-1976-4F35-81E1-42D47EC0FCF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97351C87-1976-4F35-81E1-42D47EC0FCF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97351C87-1976-4F35-81E1-42D47EC0FCF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F52A57E-7E99-4318-8C23-1724F268F918}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F52A57E-7E99-4318-8C23-1724F268F918}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F52A57E-7E99-4318-8C23-1724F268F918}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F52A57E-7E99-4318-8C23-1724F268F918}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51494A4A-33E5-4099-8AA3-A96697F792F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51494A4A-33E5-4099-8AA3-A96697F792F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51494A4A-33E5-4099-8AA3-A96697F792F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51494A4A-33E5-4099-8AA3-A96697F792F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5ABF0F0-0DF4-4224-AC36-A717345422EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5ABF0F0-0DF4-4224-AC36-A717345422EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5ABF0F0-0DF4-4224-AC36-A717345422EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5ABF0F0-0DF4-4224-AC36-A717345422EE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7F9FDB55-EC4C-470B-A980-ABCE9FA49BAE}
+	EndGlobalSection
+EndGlobal
