@@ -1,0 +1,36 @@
+[submodule "Thorium-Extensions-JSON"]
+	path = Thorium-Extensions-JSON
+	url = https://github.com/fredlllll/Thorium-Extensions-JSON.git
+[submodule "Thorium-Net"]
+	path = Thorium-Net
+	url = https://github.com/fredlllll/Thorium-Net.git
+[submodule "Thorium-Data"]
+	path = Thorium-Data
+	url = https://github.com/fredlllll/Thorium-Data.git
+[submodule "Thorium-Data-Implementation"]
+	path = Thorium-Data-Implementation
+	url = https://github.com/fredlllll/Thorium-Data-Implementation.git
+[submodule "Thorium-Utils"]
+	path = Thorium-Utils
+	url = https://github.com/fredlllll/Thorium-Utils.git
+[submodule "Thorium-Collections"]
+	path = Thorium-Collections
+	url = https://github.com/fredlllll/Thorium-Collections.git
+[submodule "Thorium-Reflection"]
+	path = Thorium-Reflection
+	url = https://github.com/fredlllll/Thorium-Reflection.git
+[submodule "Thorium-Config"]
+	path = Thorium-Config
+	url = https://github.com/fredlllll/Thorium-Config.git
+[submodule "Thorium-Threading"]
+	path = Thorium-Threading
+	url = https://github.com/fredlllll/Thorium-Threading.git
+[submodule "Thorium-IO"]
+	path = Thorium-IO
+	url = https://github.com/fredlllll/Thorium-IO.git
+[submodule "Thorium-Processes"]
+	path = Thorium-Processes
+	url = https://github.com/fredlllll/Thorium-Processes.git
+[submodule "Thorium-Extensions-String"]
+	path = Thorium-Extensions-String
+	url = https://github.com/fredlllll/Thorium-Extensions-String.git
