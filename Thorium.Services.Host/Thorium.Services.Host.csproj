@@ -36,6 +36,10 @@
     <Compile Include="ServicesHost.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Thorium-Config\Thorium.Config.csproj">
+      <Project>{9614C963-7E65-4F33-8DD2-4CA7E080A39F}</Project>
+      <Name>Thorium.Config</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Thorium-Extensions-JSON\Thorium.Extensions.JSON.csproj">
       <Project>{b1143619-9c6c-4a4b-9777-139b0dd299f9}</Project>
       <Name>Thorium-Extensions-JSON</Name>
@@ -43,6 +47,10 @@
     <ProjectReference Include="..\Thorium-Net\Thorium.Net.csproj">
       <Project>{6C35570E-8937-4E5D-80A8-608D1D5080FA}</Project>
       <Name>Thorium-Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Thorium-Threading\Thorium.Threading.csproj">
+      <Project>{A066C6D5-B60A-4D09-8D8D-DA85E7900B1E}</Project>
+      <Name>Thorium.Threading</Name>
     </ProjectReference>
     <ProjectReference Include="..\Thorium.Services.Host.Storage\Thorium.Services.Host.Storage.csproj">
       <Project>{51494A4A-33E5-4099-8AA3-A96697F792F9}</Project>
@@ -55,8 +63,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="serviceshost_config.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="serviceshost_config.json.default">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -1,70 +1,94 @@
 ﻿using System;
 using Newtonsoft.Json.Linq;
+using Thorium.Config;
 using Thorium.Net;
+using Thorium.Net.ServiceHost;
 using Thorium.Services.Shared;
 
 namespace Thorium.Services.Client
 {
     public class ThoriumServicesClient
     {
-        const string ErrorInterfaceNotFound = "Could not find an interface matching your criteria";
+        string host;
+
+        const string ErrorInterfaceNotFound = "Interface Could not be found";
 
         HttpServiceInvoker invoker;
 
-        public ThoriumServicesClient(string host = "localhost")
+        public ThoriumServicesClient(string host = "localhost", int port = 8080)
         {
-            invoker = new HttpServiceInvoker(host, 8080); //TODO: make configurable
+            this.host = host;
+            invoker = new HttpServiceInvoker(host, port);
         }
 
-        public void RegisterService(ServiceDefinition serviceDefinition, ServiceTenancy tenancy = ServiceTenancy.Local)
+        public ThoriumServicesClient(string configName)
+        {
+            dynamic c = ConfigFile.GetConfig(configName);
+
+            string host = c.host;
+            int port = c.remotePort;
+
+            invoker = new HttpServiceInvoker(host, port);
+        }
+
+        public void RegisterService(ServiceDefinition serviceDefinition)
         {
             JObject arg = new JObject
             {
-                ["serviceTenancy"] = tenancy.ToString(),
                 ["serviceDefinition"] = serviceDefinition.ToJSON()
             };
 
             invoker.Invoke("registerService", arg);
         }
 
-        public ServiceDefinition GetServiceInfo(string id, ServiceTenancy tenancy = ServiceTenancy.Both)
+        public ServiceDefinition GetServiceDefinition(string id)
         {
             JObject arg = new JObject
             {
-                ["serviceTenancy"] = tenancy.ToString(),
                 ["id"] = id
             };
-            ServiceDefinition definition = new ServiceDefinition();
-            definition.FromJSON(invoker.Invoke("getServiceInfo", arg));
-            return definition;
+            var result = invoker.Invoke("getServiceInfo", arg);
+            if(result != null)
+            {
+                ServiceDefinition serviceDefinition = new ServiceDefinition();
+                serviceDefinition.FromJSON(result);
+                return serviceDefinition;
+            }
+            return null;
         }
 
-        public IServiceInvoker GetServiceInvoker(string serviceId, ServiceTenancy tenancy = ServiceTenancy.Both, Type wantedInterfaceType = null)
+        public T GetServiceInvoker<T>(string serviceId) where T : IServiceInvoker
         {
-            ServiceDefinition def = GetServiceInfo(serviceId, tenancy);
+            return (T)GetServiceInvoker(serviceId, typeof(T));
+        }
+
+        public IServiceInvoker GetServiceInvoker(string serviceId, Type preferredInterfaceType = null)
+        {
+            ServiceDefinition serviceDefinition = GetServiceDefinition(serviceId);
 
             ServiceInterfaceDefinition sid = null;
 
-            if(wantedInterfaceType == null)
+            if(serviceDefinition.InterfaceDefinitions.Length == 0)
             {
-                sid = def.InterfaceDefinitions[0];
+                throw new Exception(ErrorInterfaceNotFound);
             }
-            else
+
+            if(preferredInterfaceType != null)
             {
-                foreach(var id in def.InterfaceDefinitions)
+                foreach(var definition in serviceDefinition.InterfaceDefinitions)
                 {
-                    if(id.Equals(wantedInterfaceType.Name))
+                    if(definition.Type.Equals(preferredInterfaceType))
                     {
-                        sid = id;
+                        sid = definition;
                         break;
                     }
                 }
             }
-            if(sid == null)
+            if(sid == null) //if we didnt find one for the interface or none was specified lets use the first one
             {
-                throw new Exception(ErrorInterfaceNotFound);
+                sid = serviceDefinition.InterfaceDefinitions[0];
             }
-            return ServiceInvokerFactory.CreateFrom(def.InterfaceDefinitions[0]);
+            return ServiceInvokerFactory.CreateFrom(sid, host);
         }
     }
 }

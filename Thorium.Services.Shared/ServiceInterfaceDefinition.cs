@@ -1,38 +1,29 @@
 ﻿using System;
 using Newtonsoft.Json.Linq;
 using Thorium.Extensions.JSON;
+using Thorium.Reflection;
 
 namespace Thorium.Services.Shared
 {
     public class ServiceInterfaceDefinition : IJSONConvertable
     {
-        public string Id { get; private set; }
-        public string Name { get; private set; }
-        public JObject InterfaceInfo { get; private set; }
+        public Type Type { get; private set; }
+        public JObject Configuration { get; private set; }
 
         public ServiceInterfaceDefinition() { }
 
-        public ServiceInterfaceDefinition(string name, JObject interfaceInfo)
+        public ServiceInterfaceDefinition(Type type, JObject configuration)
         {
-            Id = Utils.Utils.GetRandomGUID();
-            Name = name;
-            InterfaceInfo = interfaceInfo;
-        }
-
-        public ServiceInterfaceDefinition(string id, string name, JObject interfaceInfo)
-        {
-            Id = id;
-            Name = name;
-            InterfaceInfo = interfaceInfo;
+            Type = type;
+            Configuration = configuration;
         }
 
         public void FromJSON(JToken json)
         {
             if(json is JObject jo)
             {
-                Id = jo.Get<string>("id");
-                Name = jo.Get<string>("name");
-                InterfaceInfo = (JObject)jo["interfaceInfo"];
+                Type = ReflectionHelper.GetType(jo.Get<string>("type"));
+                Configuration = (JObject)jo["configuration"];
             }
             else
             {
@@ -44,9 +35,8 @@ namespace Thorium.Services.Shared
         {
             JObject jo = new JObject
             {
-                ["id"] = Id,
-                ["name"] = Name,
-                ["interfaceInfo"] = InterfaceInfo
+                ["type"] = Type.AssemblyQualifiedName,
+                ["configuration"] = Configuration
             };
 
             return jo;

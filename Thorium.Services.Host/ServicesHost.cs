@@ -1,59 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Newtonsoft.Json.Linq;
 using Thorium.Net;
+using Thorium.Net.ServiceHost;
 using Thorium.Services.Host.Storage;
 using Thorium.Services.Shared;
+using Thorium.Threading;
 
 namespace Thorium.Services.Host
 {
-    public class ServicesHost
+    public class ServicesHost : RestartableThreadClass
     {
         const string ErrorExpectedJObject = "This method expects a JObject as argument";
         const string ErrorNotFound = "No service was found matching your criteria";
 
         ServiceHost serviceHost;
 
-        IServiceDefinitionStorage local, remote;
+        IServiceDefinitionStorage serviceDefinitionStorage;
 
-        public ServicesHost()
+        public ServicesHost(string configName = "serviceshost") : base(false)
         {
             serviceHost = new ServiceHost();
 
-            Routine registerService = new Routine(nameof(registerService), RegisterService);
-            Routine getServiceInfo = new Routine(nameof(getServiceInfo), GetServiceInfo);
+            Routine putServiceDefinition = new Routine(nameof(putServiceDefinition), PutServiceDefinition);
+            Routine getServiceDefinition = new Routine(nameof(getServiceDefinition), GetServiceDefinition);
 
-            serviceHost.RegisterRoutine(registerService);
-            serviceHost.RegisterRoutine(getServiceInfo);
+            serviceHost.RegisterRoutine(putServiceDefinition);
+            serviceHost.RegisterRoutine(getServiceDefinition);
 
-            HttpServiceInvokationReceiver invokationReceiver = new HttpServiceInvokationReceiver("serviceshost");
+            HttpServiceInvokationReceiver invokationReceiver = new HttpServiceInvokationReceiver(configName);
 
             serviceHost.RegisterInvokationReceiver(invokationReceiver);
 
-            //TODO: make configurable in future if necessary
-            local = new MemoryServiceDefinitionStorage();
-            remote = new MemoryServiceDefinitionStorage();
+            //make configurable which storage to use (memory is probably fine for all eternity though)
+            serviceDefinitionStorage = new MemoryServiceDefinitionStorage();
         }
 
-        JToken RegisterService(JToken arg)
+        JToken PutServiceDefinition(JToken arg)
         {
             if(arg is JObject jo)
             {
-                ServiceTenancy tenancy = (ServiceTenancy)Enum.Parse(typeof(ServiceTenancy), jo.Get<string>("serviceTenancy"));
-
                 JObject serviceDefinitionData = (JObject)arg["serviceDefinition"];
 
                 ServiceDefinition serviceDefinition = new ServiceDefinition();
                 serviceDefinition.FromJSON(serviceDefinitionData);
 
-                if(tenancy.HasFlag(ServiceTenancy.Local))
-                {
-                    RegisterLocal(serviceDefinition);
-                }
-                if(tenancy.HasFlag(ServiceTenancy.Remote))
-                {
-                    RegisterRemote(serviceDefinition);
-                }
+                serviceDefinitionStorage.Store(serviceDefinition);
 
                 return true;
             }
@@ -63,27 +56,16 @@ namespace Thorium.Services.Host
             }
         }
 
-        JToken GetServiceInfo(JToken arg)
+        JToken GetServiceDefinition(JToken arg)
         {
             if(arg is JObject jo)
             {
-                ServiceTenancy tenancy = (ServiceTenancy)Enum.Parse(typeof(ServiceTenancy), jo.Get<string>("serviceTenancy"));
                 string id = jo.Get<string>("id");
 
-                ServiceDefinition definition = null;
-                if(tenancy.HasFlag(ServiceTenancy.Local))
+                ServiceDefinition definition = serviceDefinitionStorage.Load(id);
+                if(definition != null)
                 {
-                    if((definition = local.Load(id)) != null)
-                    {
-                        return definition.ToJSON();
-                    }
-                }
-                if(tenancy.HasFlag(ServiceTenancy.Remote))
-                {
-                    if((definition = remote.Load(id)) != null)
-                    {
-                        return definition.ToJSON();
-                    }
+                    return definition.ToJSON();
                 }
                 throw new KeyNotFoundException(ErrorNotFound);
             }
@@ -93,24 +75,28 @@ namespace Thorium.Services.Host
             }
         }
 
-        void RegisterLocal(ServiceDefinition definition)
+        public override void Start()
         {
-            local.Store(definition);
-        }
-
-        void RegisterRemote(ServiceDefinition definition)
-        {
-            remote.Store(definition);
-        }
-
-        public void Start()
-        {
+            base.Start();
             serviceHost.Start();
         }
 
-        public void Stop()
+        public override void Stop()
         {
+            base.Stop();
             serviceHost.Stop();
+        }
+
+        protected override void Run()
+        {
+            try
+            {
+                Thread.Sleep(-1);//sleep forever, but prevent the application from shutting down if there are no other threads keeping it alive
+            }
+            catch(ThreadInterruptedException)
+            {
+
+            }
         }
     }
 }

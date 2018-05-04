@@ -7,7 +7,7 @@ using Thorium.Data.Implementation;
 
 namespace Thorium.Services.Host.Storage
 {
-    public class ServiceInterfaceDefinitionSerializer : BaseSerializer<string, ServiceInterfaceDefinition>
+    /*public class ServiceInterfaceDefinitionSerializer : BaseSerializer<string, ServiceInterfaceDefinition>
     {
         public override IRawDatabase Database { get; }
 
@@ -67,5 +67,5 @@ namespace Thorium.Services.Host.Storage
             string sql = @"ALTER TABLE `" + Table + @"`
   ADD CONSTRAINT `" + Table + @"_ibfk_1` FOREIGN KEY (`service_definition_id`) REFERENCES `" + Database.GetTableName("service_definitions") + @"` (`" + ServiceDefinitionSerializer.KeyColumn + "`) ON DELETE CASCADE ON UPDATE CASCADE;";
         }
-    }
+    }*/
 }

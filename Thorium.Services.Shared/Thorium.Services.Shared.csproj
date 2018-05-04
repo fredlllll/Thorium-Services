@@ -37,7 +37,6 @@
     <Compile Include="ServiceInterfaceDefinition.cs" />
     <Compile Include="ServiceInterfaceDefinitionFactory.cs" />
     <Compile Include="ServiceInvokerFactory.cs" />
-    <Compile Include="ServiceTenancy.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -48,6 +47,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Thorium-Config\Thorium.Config.csproj">
+      <Project>{9614C963-7E65-4F33-8DD2-4CA7E080A39F}</Project>
+      <Name>Thorium.Config</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Thorium-Extensions-JSON\Thorium.Extensions.JSON.csproj">
       <Project>{B1143619-9C6C-4A4B-9777-139B0DD299F9}</Project>
       <Name>Thorium-Extensions-JSON</Name>
@@ -55,6 +58,10 @@
     <ProjectReference Include="..\Thorium-Net\Thorium.Net.csproj">
       <Project>{6C35570E-8937-4E5D-80A8-608D1D5080FA}</Project>
       <Name>Thorium.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Thorium-Reflection\Thorium.Reflection.csproj">
+      <Project>{9EB60393-FE62-4652-AE93-1C0A912C7455}</Project>
+      <Name>Thorium.Reflection</Name>
     </ProjectReference>
     <ProjectReference Include="..\Thorium-Utils\Thorium.Utils.csproj">
       <Project>{A171EBC8-F5ED-479C-BEF5-FD545B551BE4}</Project>

@@ -1,5 +1,6 @@
 ﻿using System;
 using Thorium.Net;
+using Thorium.Net.ServiceHost;
 
 namespace Thorium.Services.Shared
 {
@@ -7,7 +8,7 @@ namespace Thorium.Services.Shared
     {
         public static ServiceInterfaceDefinition CreateFrom(IServiceInvokationReceiver sir)
         {
-            throw new NotImplementedException();
+            return new ServiceInterfaceDefinition(sir.GetType(), sir.Configuration.Values);
         }
     }
 }

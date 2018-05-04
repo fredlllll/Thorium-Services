@@ -7,7 +7,6 @@ namespace Thorium.Services.Shared
     public class ServiceDefinition : IJSONConvertable
     {
         public string Id { get; private set; }
-        public string Name { get; private set; }
         public ServiceInterfaceDefinition[] InterfaceDefinitions { get; private set; }
 
         public ServiceDefinition()
@@ -15,17 +14,9 @@ namespace Thorium.Services.Shared
 
         }
 
-        public ServiceDefinition(string name, ServiceInterfaceDefinition[] interfaceDefinitions)
-        {
-            Id = Utils.Utils.GetRandomGUID();
-            Name = name;
-            InterfaceDefinitions = interfaceDefinitions;
-        }
-
-        public ServiceDefinition(string id, string name, ServiceInterfaceDefinition[] interfaceDefinitions)
+        public ServiceDefinition(string id, ServiceInterfaceDefinition[] interfaceDefinitions)
         {
             Id = id;
-            Name = name;
             InterfaceDefinitions = interfaceDefinitions;
         }
 
@@ -34,7 +25,6 @@ namespace Thorium.Services.Shared
             if(json is JObject jo)
             {
                 Id = jo.Get<string>("id");
-                Name = jo.Get<string>("name");
                 JArray interfaceDefinitions = jo["interfaceDefinitions"] as JArray;
 
                 InterfaceDefinitions = new ServiceInterfaceDefinition[interfaceDefinitions.Count];
@@ -62,7 +52,6 @@ namespace Thorium.Services.Shared
             JObject jo = new JObject()
             {
                 ["id"] = Id,
-                ["name"] = Name,
                 ["interfaceDefinitions"] = interfaceDefinitions
             };
             return jo;

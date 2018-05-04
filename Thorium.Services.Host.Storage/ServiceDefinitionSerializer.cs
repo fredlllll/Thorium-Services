@@ -6,7 +6,7 @@ using Thorium.Data.Implementation;
 
 namespace Thorium.Services.Host.Storage
 {
-    public class ServiceDefinitionSerializer : BaseSerializer<string, ServiceDefinition>
+    /*public class ServiceDefinitionSerializer : BaseSerializer<string, ServiceDefinition>
     {
         public override string Table => Database.GetTableName("service_definitions");
 
@@ -66,5 +66,5 @@ namespace Thorium.Services.Host.Storage
         public override void CreateConstraints()
         {
         }
-    }
+    }*/
 }
