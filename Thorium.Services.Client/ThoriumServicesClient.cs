@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using Thorium.Config;
 using Thorium.Net;
 using Thorium.Net.ServiceHost;
+using Thorium.Net.ServiceHost.Invokers;
 using Thorium.Services.Shared;
 
 namespace Thorium.Services.Client
@@ -11,7 +12,8 @@ namespace Thorium.Services.Client
     {
         string host;
 
-        const string ErrorInterfaceNotFound = "Interface Could not be found";
+        const string ErrorInterfaceNotFound = "Interface could not be found";
+        const string ErrorServiceDefinitionNotFound = "Service Definition could not be found";
 
         HttpServiceInvoker invoker;
 
@@ -21,15 +23,17 @@ namespace Thorium.Services.Client
             invoker = new HttpServiceInvoker(host, port);
         }
 
-        public ThoriumServicesClient(string configName)
+        ThoriumServicesClient(Config.Config config)
         {
-            dynamic c = ConfigFile.GetConfig(configName);
+            dynamic c = config;
 
             string host = c.host;
             int port = c.remotePort;
 
             invoker = new HttpServiceInvoker(host, port);
         }
+
+        public ThoriumServicesClient(string configName) : this(ConfigFile.GetConfig(configName)) { }
 
         public void RegisterService(ServiceDefinition serviceDefinition)
         {
@@ -57,38 +61,44 @@ namespace Thorium.Services.Client
             return null;
         }
 
-        public T GetServiceInvoker<T>(string serviceId) where T : IServiceInvoker
+        public T GetServiceInvoker<T>(string serviceId) where T : IInvoker
         {
             return (T)GetServiceInvoker(serviceId, typeof(T));
         }
 
-        public IServiceInvoker GetServiceInvoker(string serviceId, Type preferredInterfaceType = null)
+        ServiceInterfaceDefinition GetServiceInterfaceDefinition(ServiceDefinition serviceDefinition, Type preferredInterfaceType = null)
         {
-            ServiceDefinition serviceDefinition = GetServiceDefinition(serviceId);
-
-            ServiceInterfaceDefinition sid = null;
-
-            if(serviceDefinition.InterfaceDefinitions.Length == 0)
-            {
-                throw new Exception(ErrorInterfaceNotFound);
-            }
-
             if(preferredInterfaceType != null)
             {
                 foreach(var definition in serviceDefinition.InterfaceDefinitions)
                 {
                     if(definition.Type.Equals(preferredInterfaceType))
                     {
-                        sid = definition;
-                        break;
+                        return definition;
                     }
                 }
             }
-            if(sid == null) //if we didnt find one for the interface or none was specified lets use the first one
+
+            return serviceDefinition.InterfaceDefinitions[0];
+        }
+
+        public IInvoker GetServiceInvoker(string serviceId, Type preferredInterfaceType = null)
+        {
+            ServiceDefinition serviceDefinition = GetServiceDefinition(serviceId);
+
+            if(serviceDefinition == null)
             {
-                sid = serviceDefinition.InterfaceDefinitions[0];
+                throw new Exception(ErrorServiceDefinitionNotFound);
             }
-            return ServiceInvokerFactory.CreateFrom(sid, host);
+
+            if(serviceDefinition.InterfaceDefinitions.Length == 0)
+            {
+                throw new Exception(ErrorInterfaceNotFound);
+            }
+
+            ServiceInterfaceDefinition interfaceDefinition = GetServiceInterfaceDefinition(serviceDefinition, preferredInterfaceType);
+
+            return ServiceInvokerFactory.CreateFrom(interfaceDefinition, host);
         }
     }
 }

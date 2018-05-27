@@ -12,7 +12,7 @@ namespace Thorium.Services.Shared
         /// <param name="sid"></param>
         /// <param name="host"></param>
         /// <returns></returns>
-        public static IServiceInvoker CreateFrom(ServiceInterfaceDefinition sid, string host = "localhost")
+        public static IInvoker CreateFrom(ServiceInterfaceDefinition sid, string host = "localhost")
         {
             Type compatibleInvoker = null;
 
@@ -31,7 +31,7 @@ namespace Thorium.Services.Shared
             Config.Config config = new Config.Config(sid.Configuration);
             config.Values["host"] = host;
 
-            return (IServiceInvoker)Activator.CreateInstance(compatibleInvoker, config);
+            return (IInvoker)Activator.CreateInstance(compatibleInvoker, config);
         }
     }
 }

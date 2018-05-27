@@ -4,6 +4,8 @@ using System.Threading;
 using Newtonsoft.Json.Linq;
 using Thorium.Net;
 using Thorium.Net.ServiceHost;
+using Thorium.Net.ServiceHost.InvokationHandlers;
+using Thorium.Net.ServiceHost.InvokationReceivers;
 using Thorium.Services.Host.Storage;
 using Thorium.Services.Shared;
 using Thorium.Threading;
@@ -26,8 +28,10 @@ namespace Thorium.Services.Host
             Routine putServiceDefinition = new Routine(nameof(putServiceDefinition), PutServiceDefinition);
             Routine getServiceDefinition = new Routine(nameof(getServiceDefinition), GetServiceDefinition);
 
-            serviceHost.RegisterRoutine(putServiceDefinition);
-            serviceHost.RegisterRoutine(getServiceDefinition);
+            RoutineInvokationHandler rih = new RoutineInvokationHandler();
+            rih.RegisterRoutine(putServiceDefinition);
+            rih.RegisterRoutine(getServiceDefinition);
+            serviceHost.RegisterInvokationHandler(rih);
 
             HttpServiceInvokationReceiver invokationReceiver = new HttpServiceInvokationReceiver(configName);
 
@@ -81,9 +85,9 @@ namespace Thorium.Services.Host
             serviceHost.Start();
         }
 
-        public override void Stop()
+        public override void Stop(int joinTimeoutms = -1)
         {
-            base.Stop();
+            base.Stop(joinTimeoutms);
             serviceHost.Stop();
         }
 

@@ -6,7 +6,7 @@ namespace Thorium.Services.Shared
 {
     public static class ServiceInterfaceDefinitionFactory
     {
-        public static ServiceInterfaceDefinition CreateFrom(IServiceInvokationReceiver sir)
+        public static ServiceInterfaceDefinition CreateFrom(IInvokationReceiver sir)
         {
             return new ServiceInterfaceDefinition(sir.GetType(), sir.Configuration.Values);
         }
