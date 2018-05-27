@@ -1,0 +1,11 @@
+purpose of this software (kinda, just writing down my thoughts)
+
+users of thorium might have to invoke several services.
+problem: services interfaces are hosted on a certain host and port. i dont want to put that combo into every program that uses it
+solution: register the services interfaces in a database that can be queried by the users software.
+
+example:
+we have user software US which has to invoke services S1 S2 and S3
+instead of having the ips and ports for each of the 3 services configured in US, we only need to know how to access the database
+the services register themselfes on the database with a name and the interfaces that they support
+the user can then query for a service using its name and gets an invoker for said service.
